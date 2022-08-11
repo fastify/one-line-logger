@@ -4,7 +4,7 @@ import { Writable } from 'readable-stream'
 import pretty from 'pino-pretty'
 import fastify, { FastifyServerOptions } from 'fastify'
 
-export const TIME = '20:51:48.0'
+export const TIME = '2017-02-14 20:51:48.0'
 export const EPOCH = 1487076708000
 export const MESSAGE_KEY = 'message'
 
@@ -28,7 +28,7 @@ export const serverFactory = (
   fastifyOpts: FastifyServerOptions = {}
 ) => {
   const destination = new Writable({
-    write (chunk, enc, cb) {
+    write(chunk, enc, cb) {
       messages.push(chunk.toString())
 
       process.nextTick(cb)

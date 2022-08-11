@@ -25,7 +25,10 @@ export const messageFormat = (
   messageKey: string
 ): string => {
   const date = new Date(log.time)
-  const time = `${date.toLocaleTimeString()}.${date.getMilliseconds()}`
+
+  const [day, month, year] = date.toLocaleDateString().split('/')
+  const time = `${year}-${month}-${day} ${date.toLocaleTimeString()}.${date.getMilliseconds()}`
+
   const level = LEVEL_TO_STRING[log.level]
 
   const logMessages = [time, level]
