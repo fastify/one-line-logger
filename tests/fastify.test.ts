@@ -14,12 +14,10 @@ afterAll(() => {
 })
 
 beforeEach(() => {
-  server = serverFactory(messages)
-})
-
-afterEach(async () => {
-  await server.close()
+  // empty messages array
   messages.splice(0, messages.length)
+
+  server = serverFactory(messages)
 })
 
 test('should log server started messages', async () => {
@@ -30,6 +28,7 @@ test('should log server started messages', async () => {
     `${TIME} - info - Server listening at http://[::1]:63995\n`
   ]
   expect(messages).toEqual(messagesExpected)
+  await server.close()
 })
 
 test.each([
@@ -44,11 +43,10 @@ test.each([
   'should log request and response messages for %p',
   async (method: HTTPMethods) => {
     const serverMethod = method === 'HEAD' ? 'GET' : method
-    server[serverMethod.toLowerCase()]('/path', () => {
-      return `a ${method} response`
+    server[serverMethod.toLowerCase()]('/path', (_, req) => {
+      req.send()
     })
 
-    await server.listen({ port: 0 })
     await server.inject({
       method,
       url: '/path'
@@ -58,7 +56,7 @@ test.each([
       `${TIME} - info - ${method} /path - incoming request\n`,
       `${TIME} - info - request completed\n`
     ]
-    expect(messages.slice(2)).toEqual(messagesExpected)
+    expect(messages).toEqual(messagesExpected)
   }
 )
 
@@ -75,7 +73,6 @@ test('should handle user defined log', async () => {
 
     req.send()
   })
-  await server.listen({ port: 0 })
 
   await server.inject('/a-path-with-user-defined-log')
 
@@ -90,5 +87,5 @@ test('should handle user defined log', async () => {
     `${TIME} - info - request completed\n`
   ]
 
-  expect(messages.slice(2)).toEqual(messagesExpected)
+  expect(messages).toEqual(messagesExpected)
 })
