@@ -1,37 +1,29 @@
-# skeleton
+# @fastify/one-line-logger
 
-Template repository to create standardized Fastify plugins.
+`@fastify/one-line-logger` helps you format fastify's log into a nice one line message:
+
+```
+HH:mm:ss.SSS - <level> - <method> <route path> - <message>
+```
+
+A standard incoming request log line like:
+
+```
+{"level": 30,"time": 1660151282194,"pid": 1557,"hostname": "foo","reqId": "req-1","req": {"method": "GET","url": "/path","hostname": "localhost:8080","remoteAddress": "127.0.0.1"},"msg": "incoming request"}
+```
+
+Will format to:
+
+```
+01:10:25.194 - info - GET / - incoming request
+```
 
 # Getting started
 
-- Click on `Use this template` above to create a new repository based on this repository.
-
-# What's included?
-
-1. Github CI Actions for installing, testing your package.
-2. Github CI Actions to validate different package managers.
-3. Dependabot V2 config to automate dependency updates.
-4. Template for the GitHub App [Stale](https://github.com/apps/stale) to mark issues as stale. 
-5. Template for the GitHub App [tests-checker](https://github.com/apps/tests-checker) to check if a PR contains tests.
-
-# Repository structure
-
-```
-├── .github
-│   ├── workflows
-│   │   ├── ci.yml
-│   │   └── package-manager-ci.yml
-│   ├── .stale.yml
-│   ├── dependabot.yml
-│   └── tests_checker.yml
-│
-├── docs (Documentation)
-│   
-├── examples (Code examples)
-│
-├── test (Application tests)
-│   
-├── types (Typescript types)
-│  
-└── README.md
+```js
+const server = fastify({
+  logger: {
+    transport: "one-line-logger",
+  },
+});
 ```
