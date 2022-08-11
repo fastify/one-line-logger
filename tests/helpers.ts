@@ -28,7 +28,7 @@ export const serverFactory = (
   fastifyOpts: FastifyServerOptions = {}
 ) => {
   const destination = new Writable({
-    write(chunk, enc, cb) {
+    write (chunk, enc, cb) {
       messages.push(chunk.toString())
 
       process.nextTick(cb)
