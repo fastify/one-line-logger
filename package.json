@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": "tap",
-    "test:watch": "jest --watch --coverage",
+    "test:watch": "tap --watch --coverage",
     "lint": "standard | snazzy",
     "lint:fix": "standard --fix"
   },
