@@ -2,8 +2,8 @@
   "name": "@fastify/one-line-logger",
   "version": "1.0.0",
   "description": "A simple formatter for fastify's logs",
-  "main": "dist/index.js",
-  "types": "dist/index.d.js",
+  "main": "src/index.js",
+  "types": "src/index.d.js",
   "directories": {
     "doc": "docs",
     "example": "examples",
@@ -25,18 +25,13 @@
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-promise": "^6.0.0",
     "fastify": "^4.3.0",
-    "rimraf": "^3.0.2",
-    "tap": "^16.3.0",
-    "ts-node": "^10.9.1",
-    "typescript": "<4.5.0"
+    "tap": "^16.3.0"
   },
   "scripts": {
-    "test": "npm run build && npm run test:coverage",
-    "test:unit": "tap",
+    "test": "tap",
     "test:watch": "jest --watch --coverage",
     "lint": "eslint \"*/**/*.{js,ts,tsx}\"",
     "lint:fix": "eslint \"*/**/*.{js,ts,tsx}\" --fix",
-    "build": "rimraf ./dist && mkdir dist && tsc"
   },
   "repository": {
     "type": "git",

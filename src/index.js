@@ -38,6 +38,5 @@ const target = (opts) =>
     ...opts
   })
 
-// module.exports = target;
 module.exports = target
 module.exports.messageFormat = messageFormat
