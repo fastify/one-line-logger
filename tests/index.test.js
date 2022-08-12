@@ -1,5 +1,5 @@
-import { LogDescriptor, messageFormat } from '../src'
-import { EPOCH, TIME, MESSAGE_KEY } from './helpers'
+const { EPOCH, TIME, MESSAGE_KEY } = require('./helpers')
+const { messageFormat } = require('../src')
 
 test.each([
   [
@@ -20,7 +20,7 @@ test.each([
   ]
 ])(
   'format log correctly with different logDescriptors',
-  (logDescriptor: LogDescriptor, expectedLog: string) => {
+  (logDescriptor, expectedLog) => {
     const log = messageFormat(logDescriptor, MESSAGE_KEY)
 
     expect(log).toEqual(expectedLog)

@@ -1,8 +1,8 @@
-import { serverFactory, EPOCH, TIME, HTTPMethods } from './helpers'
+const { serverFactory, EPOCH, TIME } = require('./helpers')
 
 const oldDateNow = Date.now
 
-const messages: string[] = []
+const messages = []
 let server = serverFactory(messages)
 
 beforeAll(() => {
@@ -31,17 +31,9 @@ test('should log server started messages', async () => {
   await server.close()
 })
 
-test.each([
-  'GET',
-  'POST',
-  'PUT',
-  'DELETE',
-  'PATCH',
-  'OPTIONS',
-  'HEAD'
-] as HTTPMethods[])(
+test.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'])(
   'should log request and response messages for %p',
-  async (method: HTTPMethods) => {
+  async (method) => {
     const serverMethod = method === 'HEAD' ? 'GET' : method
     server[serverMethod.toLowerCase()]('/path', (_, req) => {
       req.send()

@@ -1,4 +1,4 @@
-import pretty from 'pino-pretty'
+const pretty = require('pino-pretty')
 
 const LEVEL_TO_STRING = {
   60: 'fatal',
@@ -9,21 +9,7 @@ const LEVEL_TO_STRING = {
   10: 'trace'
 }
 
-export interface Request {
-  method: string
-  url: string
-}
-
-export type LogDescriptor = Record<string, unknown> & {
-  time: number
-  level: number
-  req?: Request
-}
-
-export const messageFormat = (
-  log: LogDescriptor,
-  messageKey: string
-): string => {
+const messageFormat = (log, messageKey) => {
   const date = new Date(log.time)
 
   const [day, month, year] = date.toLocaleDateString().split('/')
@@ -44,7 +30,7 @@ export const messageFormat = (
   return logMessages.join(' - ')
 }
 
-const target = (opts: pretty.PrettyOptions) =>
+const target = (opts) =>
   pretty({
     messageFormat,
     ignore: 'pid,hostname,time,level',
@@ -52,4 +38,6 @@ const target = (opts: pretty.PrettyOptions) =>
     ...opts
   })
 
-export default target
+// module.exports = target;
+module.exports = target
+module.exports.messageFormat = messageFormat
