@@ -8,7 +8,7 @@ const { test } = t
 const oldDateNow = Date.now
 
 const messages = []
-let server = serverFactory(messages)
+let server = serverFactory(messages, { colorize: false })
 
 t.before(() => {
   Date.now = () => EPOCH
