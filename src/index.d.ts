@@ -8,6 +8,6 @@ export declare type LogDescriptor = Record<string, unknown> & {
     level: number;
     req?: Request;
 };
-export declare const messageFormat: (log: LogDescriptor, messageKey: string) => string
+export declare const messageFormatFactory: (colorize: boolean) => (log: LogDescriptor, messageKey: string) => string
 declare const target: (opts: pretty.PrettyOptions) => pretty.PrettyStream
 export default target

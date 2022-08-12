@@ -1,6 +1,7 @@
 'use-strict'
 
 const pretty = require('pino-pretty')
+const { colorizerFactory } = pretty
 
 const LEVEL_TO_STRING = {
   60: 'fatal',
@@ -27,30 +28,42 @@ const formatTime = (timestamp) => {
   return time
 }
 
-const messageFormat = (log, messageKey) => {
-  const time = formatTime(log.time)
-  const level = LEVEL_TO_STRING[log.level]
+const messageFormatFactory = (colorize) => {
+  const colorizer = colorizerFactory(colorize === true)
 
-  const logMessages = [time, level]
+  const messageFormat = (log, messageKey) => {
+    const time = formatTime(log.time)
+    const level = colorizer(LEVEL_TO_STRING[log.level]).toLowerCase()
 
-  if (log.req) {
-    const { method, url } = log.req
+    const logMessages = [time, level]
 
-    logMessages.push(`${method} ${url}`)
+    if (log.req) {
+      const { method, url } = log.req
+
+      logMessages.push(`${method} ${url}`)
+    }
+
+    logMessages.push(colorizer.message(log[messageKey]))
+
+    return logMessages.join(' - ')
   }
 
-  logMessages.push(log[messageKey])
-
-  return logMessages.join(' - ')
+  return messageFormat
 }
 
-const target = (opts) =>
-  pretty({
+const target = (opts = {}) => {
+  const { colorize, ...rest } = opts
+
+  const messageFormat = messageFormatFactory(colorize)
+
+  return pretty({
     messageFormat,
     ignore: 'pid,hostname,time,level',
     hideObject: true,
-    ...opts
+    colorize: false,
+    ...rest
   })
+}
 
 module.exports = target
-module.exports.messageFormat = messageFormat
+module.exports.messageFormatFactory = messageFormatFactory
