@@ -1,3 +1,5 @@
+'use strict'
+
 const { Writable } = require('readable-stream')
 const fastify = require('fastify')
 const pino = require('pino')

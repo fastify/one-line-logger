@@ -1,3 +1,5 @@
+'use-strict'
+
 const pretty = require('pino-pretty')
 
 const LEVEL_TO_STRING = {

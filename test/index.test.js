@@ -1,3 +1,5 @@
+'use strict'
+
 const { EPOCH, TIME, MESSAGE_KEY } = require('./helpers')
 const { messageFormat } = require('../src')
 const { test } = require('tap')

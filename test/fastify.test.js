@@ -1,3 +1,5 @@
+'use strict'
+
 const { serverFactory, EPOCH, TIME } = require('./helpers')
 const t = require('tap')
 
