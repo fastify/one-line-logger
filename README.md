@@ -29,7 +29,7 @@ npm i @fastify/one-line-logger
 ```js
 const server = fastify({
   logger: {
-    transport: "one-line-logger",
+    transport: "@fastify/one-line-logger",
   },
 });
 ```
