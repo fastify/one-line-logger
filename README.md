@@ -18,6 +18,12 @@ Will format to:
 2022-08-11 01:08:02.194 - info - GET / - incoming request
 ```
 
+# Install
+
+```
+npm i @fastify/one-line-logger
+```
+
 # Getting started
 
 ```js
