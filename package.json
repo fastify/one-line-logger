@@ -44,12 +44,6 @@
     "type": "git",
     "url": "https://github.com/fastify/one-line-logger.git"
   },
-  "maintainers": [
-    {
-      "name": "Tommy Dew",
-      "email": "tommydew42@gmail.com"
-    }
-  ],
   "keywords": [
     "fastify",
     "logger",
