@@ -9,12 +9,24 @@ const LEVEL_TO_STRING = {
   10: 'trace'
 }
 
+const formatTime = (timestamp) => {
+  const dateObject = new Date(timestamp)
+
+  const date = dateObject.getDate()
+  const month = String(dateObject.getMonth() + 1).padStart(2, '0')
+  const year = dateObject.getFullYear()
+  const hour = dateObject.getHours()
+  const minute = dateObject.getMinutes()
+  const second = dateObject.getSeconds()
+  const milliSecond = dateObject.getMilliseconds()
+
+  const time = `${year}-${month}-${date} ${hour}:${minute}:${second}.${milliSecond}`
+
+  return time
+}
+
 const messageFormat = (log, messageKey) => {
-  const date = new Date(log.time)
-
-  const [day, month, year] = date.toLocaleDateString().split('/')
-  const time = `${year}-${month}-${day} ${date.toLocaleTimeString()}.${date.getMilliseconds()}`
-
+  const time = formatTime(log.time)
   const level = LEVEL_TO_STRING[log.level]
 
   const logMessages = [time, level]
