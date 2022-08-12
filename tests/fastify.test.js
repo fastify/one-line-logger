@@ -1,39 +1,43 @@
 const { serverFactory, EPOCH, TIME } = require('./helpers')
+const t = require('tap')
+
+const { test } = t
 
 const oldDateNow = Date.now
 
 const messages = []
 let server = serverFactory(messages)
 
-beforeAll(() => {
+t.before(() => {
   Date.now = () => EPOCH
 })
 
-afterAll(() => {
+t.teardown(() => {
   Date.now = oldDateNow
 })
 
-beforeEach(() => {
+t.beforeEach(() => {
   // empty messages array
   messages.splice(0, messages.length)
 
   server = serverFactory(messages)
 })
 
-test('should log server started messages', async () => {
+test('should log server started messages', async (t) => {
   await server.listen({ port: 63995 })
 
   const messagesExpected = [
     `${TIME} - info - Server listening at http://127.0.0.1:63995\n`,
     `${TIME} - info - Server listening at http://[::1]:63995\n`
   ]
-  expect(messages).toEqual(messagesExpected)
+  t.same(messages, messagesExpected)
   await server.close()
+  t.end()
 })
 
-test.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'])(
-  'should log request and response messages for %p',
-  async (method) => {
+const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']
+methods.forEach((method) => {
+  test('should log request and response messages for %p', async (t) => {
     const serverMethod = method === 'HEAD' ? 'GET' : method
     server[serverMethod.toLowerCase()]('/path', (_, req) => {
       req.send()
@@ -48,11 +52,13 @@ test.each(['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'])(
       `${TIME} - info - ${method} /path - incoming request\n`,
       `${TIME} - info - request completed\n`
     ]
-    expect(messages).toEqual(messagesExpected)
-  }
-)
 
-test('should handle user defined log', async () => {
+    t.same(messages, messagesExpected)
+    t.end()
+  })
+})
+
+test('should handle user defined log', async (t) => {
   server = serverFactory(messages, { minimumLevel: 'trace' })
 
   server.get('/a-path-with-user-defined-log', (res, req) => {
@@ -79,5 +85,6 @@ test('should handle user defined log', async () => {
     `${TIME} - info - request completed\n`
   ]
 
-  expect(messages).toEqual(messagesExpected)
+  t.same(messages, messagesExpected)
+  t.end()
 })

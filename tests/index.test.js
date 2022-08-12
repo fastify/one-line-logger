@@ -1,7 +1,8 @@
 const { EPOCH, TIME, MESSAGE_KEY } = require('./helpers')
 const { messageFormat } = require('../src')
+const { test } = require('tap')
 
-test.each([
+const testCases = [
   [
     { time: EPOCH, level: 10, [MESSAGE_KEY]: 'basic log' },
     `${TIME} - trace - basic log`
@@ -18,11 +19,13 @@ test.each([
     },
     `${TIME} - info - GET /path - basic incoming request log`
   ]
-])(
-  'format log correctly with different logDescriptors',
-  (logDescriptor, expectedLog) => {
+]
+
+testCases.forEach(([logDescriptor, expectedLog]) => {
+  test('format log correctly with different logDescriptor', (t) => {
     const log = messageFormat(logDescriptor, MESSAGE_KEY)
 
-    expect(log).toEqual(expectedLog)
-  }
-)
+    t.equal(log, expectedLog)
+    t.end()
+  })
+})

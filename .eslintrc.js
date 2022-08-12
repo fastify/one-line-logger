@@ -1,8 +1,7 @@
 module.exports = {
   env: {
     es2021: true,
-    node: true,
-    'jest/globals': true
+    node: true
   },
   extends: ['standard'],
   parser: '@typescript-eslint/parser',
@@ -10,7 +9,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['@typescript-eslint', 'jest'],
+  plugins: ['@typescript-eslint'],
   rules: {},
   ignorePatterns: ['dist/']
 }
