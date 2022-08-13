@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple formatter for fastify's logs",
   "main": "src/index.js",
-  "types": "src/index.d.js",
+  "types": "src/index.d.ts",
   "directories": {
     "doc": "docs",
     "example": "examples",
