@@ -3,7 +3,7 @@
 `@fastify/one-line-logger` helps you format fastify's log into a nice one line message:
 
 ```
-YYYY-MM-dd HH:mm:ss.SSS - <level> - <method> <route path> - <message>
+YYYY-MM-dd HH:mm:ss.SSSTZ - <level> - <method> <route path> - <message>
 ```
 
 A standard incoming request log line like:
@@ -15,7 +15,7 @@ A standard incoming request log line like:
 Will format to:
 
 ```
-2022-08-11 01:08:02.194 - info - GET / - incoming request
+2022-08-11 01:08:02.194+0100 - info - GET / - incoming request
 ```
 
 # Install
