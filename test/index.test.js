@@ -2,20 +2,20 @@
 
 const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
 const target = require('../src')
-const t = require('tap')
+const tap = require('tap')
 
 const { messageFormatFactory } = target
 
-const { test } = t
+const { test } = tap
 
 const messageFormat = messageFormatFactory(false)
 const messageFormatColorized = messageFormatFactory(true)
 
-t.before(() => {
+tap.before(() => {
   mockTime()
 })
 
-t.teardown(() => {
+tap.teardown(() => {
   unmockTime()
 })
 
@@ -43,7 +43,6 @@ const logDescriptorLogPairs = [
     `${TIME} - info - GET /path - basic incoming request log`
   ]
 ]
-
 logDescriptorLogPairs.forEach(([logDescriptor, expectedLog]) => {
   test('format log correctly with different logDescriptor', (t) => {
     const log = messageFormat(logDescriptor, MESSAGE_KEY)

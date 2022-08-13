@@ -1,22 +1,22 @@
 'use strict'
 
 const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
-const t = require('tap')
+const tap = require('tap')
 
-const { test } = t
+const { test } = tap
 
 const messages = []
 let server = serverFactory(messages, { colorize: false })
 
-t.before(() => {
+tap.before(() => {
   mockTime()
 })
 
-t.teardown(() => {
+tap.teardown(() => {
   unmockTime()
 })
 
-t.beforeEach(() => {
+tap.beforeEach(() => {
   // empty messages array
   messages.splice(0, messages.length)
 
