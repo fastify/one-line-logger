@@ -1,8 +1,10 @@
 'use strict'
 
 const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
-const { messageFormatFactory } = require('../src')
+const target = require('../src')
 const t = require('tap')
+
+const { messageFormatFactory } = target
 
 const { test } = t
 
@@ -15,6 +17,12 @@ t.before(() => {
 
 t.teardown(() => {
   unmockTime()
+})
+
+test('able to instantiate target without arguments', (t) => {
+  target()
+  t.pass()
+  t.end()
 })
 
 const logDescriptorLogPairs = [
