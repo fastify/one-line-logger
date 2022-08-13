@@ -1,11 +1,21 @@
 'use strict'
 
-const { EPOCH, TIME, MESSAGE_KEY } = require('./helpers')
+const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
 const { messageFormatFactory } = require('../src')
-const { test } = require('tap')
+const t = require('tap')
+
+const { test } = t
 
 const messageFormat = messageFormatFactory(false)
 const messageFormatColorized = messageFormatFactory(true)
+
+t.before(() => {
+  mockTime()
+})
+
+t.teardown(() => {
+  unmockTime()
+})
 
 const logDescriptorLogPairs = [
   [

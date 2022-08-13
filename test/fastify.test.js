@@ -1,21 +1,19 @@
 'use strict'
 
-const { serverFactory, EPOCH, TIME } = require('./helpers')
+const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
 const t = require('tap')
 
 const { test } = t
-
-const oldDateNow = Date.now
 
 const messages = []
 let server = serverFactory(messages, { colorize: false })
 
 t.before(() => {
-  Date.now = () => EPOCH
+  mockTime()
 })
 
 t.teardown(() => {
-  Date.now = oldDateNow
+  unmockTime()
 })
 
 t.beforeEach(() => {

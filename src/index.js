@@ -1,6 +1,7 @@
 'use-strict'
 
 const pretty = require('pino-pretty')
+const dateformat = require('dateformat')
 const { colorizerFactory } = pretty
 
 const LEVEL_TO_STRING = {
@@ -12,27 +13,11 @@ const LEVEL_TO_STRING = {
   10: 'trace'
 }
 
-const formatTime = (timestamp) => {
-  const dateObject = new Date(timestamp)
-
-  const date = dateObject.getDate()
-  const month = String(dateObject.getMonth() + 1).padStart(2, '0')
-  const year = dateObject.getFullYear()
-  const hour = dateObject.getHours()
-  const minute = dateObject.getMinutes()
-  const second = dateObject.getSeconds()
-  const milliSecond = dateObject.getMilliseconds()
-
-  const time = `${year}-${month}-${date} ${hour}:${minute}:${second}.${milliSecond}`
-
-  return time
-}
-
 const messageFormatFactory = (colorize) => {
   const colorizer = colorizerFactory(colorize === true)
 
   const messageFormat = (log, messageKey) => {
-    const time = formatTime(log.time)
+    const time = dateformat(log.time, 'yyyy-mm-dd HH:MM:ss.lo')
     const level = colorizer(LEVEL_TO_STRING[log.level]).toLowerCase()
 
     const logMessages = [time, level]
