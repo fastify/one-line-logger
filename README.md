@@ -1,3 +1,4 @@
+<a id="@fastify/one-line-logger"></a>
 # @fastify/one-line-logger
 
 `@fastify/one-line-logger` helps you format fastify's log into a nice one line message:
@@ -18,13 +19,15 @@ Will format to:
 2022-08-11 01:08:02.194+0100 - info - GET / - incoming request
 ```
 
-# Install
+<a id="install"></a>
+## Install
 
 ```
 npm i @fastify/one-line-logger
 ```
 
-# Getting started
+<a id="getting-started"></a>
+## Getting started
 
 ```js
 const server = fastify({
@@ -35,3 +38,8 @@ const server = fastify({
   },
 });
 ```
+
+<a id="license"></a>
+## License
+
+MIT License
