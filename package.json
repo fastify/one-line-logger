@@ -1,0 +1,40 @@
+{
+  "name": "@fastify/one-line-logger",
+  "version": "1.0.0",
+  "description": "A simple formatter for fastify's logs",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "dependencies": {
+    "dateformat": "^4.6.3",
+    "pino-pretty": "^8.1.0"
+  },
+  "devDependencies": {
+    "fastify": "^4.3.0",
+    "snazzy": "^9.0.0",
+    "standard": "^17.0.0",
+    "tap": "^16.3.0"
+  },
+  "scripts": {
+    "test": "tap",
+    "test:watch": "tap --watch --no-coverage-report",
+    "lint": "standard | snazzy",
+    "lint:fix": "standard --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fastify/one-line-logger.git"
+  },
+  "keywords": [
+    "fastify",
+    "logger",
+    "pino",
+    "pino-pretty",
+    "one-line-logger"
+  ],
+  "license": "MIT"
+}
