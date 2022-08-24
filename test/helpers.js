@@ -40,9 +40,9 @@ const serverFactory = (messages, opts, fastifyOpts) => {
   })
 }
 
-const DateOriginalNow = Date.now
-const DateGetTimezoneOffset = Date.prototype.getTimezoneOffset
-const DateOriginalGetHours = Date.prototype.getHours
+const dateOriginalNow = Date.now
+const dateGetTimezoneOffset = Date.prototype.getTimezoneOffset
+const dateOriginalGetHours = Date.prototype.getHours
 
 const mockTime = () => {
   Date.now = () => EPOCH
@@ -55,11 +55,11 @@ const mockTime = () => {
 }
 
 const unmockTime = () => {
-  Date.now = DateOriginalNow
+  Date.now = dateOriginalNow
   // eslint-disable-next-line
-  Date.prototype.getTimezoneOffset = DateGetTimezoneOffset
+  Date.prototype.getTimezoneOffset = dateGetTimezoneOffset
   // eslint-disable-next-line
-  Date.prototype.getHours = DateOriginalGetHours
+  Date.prototype.getHours = dateOriginalGetHours
 }
 
 module.exports = {
