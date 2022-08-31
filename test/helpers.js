@@ -25,47 +25,41 @@ const pinoFactory = (opts) => {
 
 const serverFactory = (messages, opts, fastifyOpts) => {
   const destination = new Writable({
-    write (chunk, enc, cb) {
+    write (chunk, _enc, cb) {
       messages.push(chunk.toString())
 
       process.nextTick(cb)
     }
   })
 
-  const pino = pinoFactory({ destination, ...opts })
+  const pinoLogger = pinoFactory({ destination, ...opts })
 
   return fastify({
-    logger: pino,
+    logger: pinoLogger,
     ...fastifyOpts
   })
 }
 
+const dateOriginalNow = Date.now
+const dateGetTimezoneOffset = Date.prototype.getTimezoneOffset
+const dateOriginalGetHours = Date.prototype.getHours
+
 const mockTime = () => {
-  Date.originalNow = Date.now
   Date.now = () => EPOCH
 
   // eslint-disable-next-line
-  Date.prototype.originalGetTimezoneOffset = Date.prototype.getTimezoneOffset
-  // eslint-disable-next-line
   Date.prototype.getTimezoneOffset = () => TIMEZONE_OFFSET;
 
-  // eslint-disable-next-line
-  Date.prototype.getHours = Date.prototype.getHours
   // eslint-disable-next-line
   Date.prototype.getHours = () => HOUR;
 }
 
 const unmockTime = () => {
-  Date.now = Date.originalNow
+  Date.now = dateOriginalNow
   // eslint-disable-next-line
-  Date.prototype.getTimezoneOffset = Date.prototype.originalGetTimezoneOffset
+  Date.prototype.getTimezoneOffset = dateGetTimezoneOffset
   // eslint-disable-next-line
-  Date.prototype.getHours = Date.prototype.originalGetHours
-
-  delete Date.originalNow
-  // eslint-disable-next-line
-  delete Date.prototype.originalGetTimezoneOffset
-  delete Date.prototype.originalGetHours
+  Date.prototype.getHours = dateOriginalGetHours
 }
 
 module.exports = {
