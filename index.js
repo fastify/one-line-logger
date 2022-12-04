@@ -1,42 +1,9 @@
 'use-strict'
 
 const pretty = require('pino-pretty')
-const formatDate = require('./lib/formatDate')
-const { colorizerFactory } = pretty
+const { messageFormatFactory, LEVEL_TO_STRING } = require("./lib/messageFormatFactory")
 
-const LEVEL_TO_STRING = {
-  60: 'fatal',
-  50: 'error',
-  40: 'warn',
-  30: 'info',
-  20: 'debug',
-  10: 'trace'
-}
-
-const messageFormatFactory = (colorize) => {
-  const colorizer = colorizerFactory(colorize === true)
-
-  const messageFormat = (log, messageKey) => {
-    const time = formatDate(log.time)
-    const level = colorizer(LEVEL_TO_STRING[log.level]).toLowerCase()
-
-    const logMessages = [time, level]
-
-    if (log.req) {
-      const { method, url } = log.req
-
-      logMessages.push(`${method} ${url}`)
-    }
-
-    logMessages.push(colorizer.message(log[messageKey]))
-
-    return logMessages.join(' - ')
-  }
-
-  return messageFormat
-}
-
-const target = (opts = {}) => {
+const oneLineLogger = (opts = {}) => {
   const { colorize, ...rest } = opts
 
   const messageFormat = messageFormatFactory(colorize)
@@ -50,5 +17,9 @@ const target = (opts = {}) => {
   })
 }
 
-module.exports = target
+module.exports = oneLineLogger
+module.exports.default = oneLineLogger
+module.exports.oneLineLogger = oneLineLogger
+
 module.exports.messageFormatFactory = messageFormatFactory
+module.exports.LEVEL_TO_STRING = LEVEL_TO_STRING
