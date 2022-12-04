@@ -1,7 +1,7 @@
 'use-strict'
 
 const pretty = require('pino-pretty')
-const { messageFormatFactory, LEVEL_TO_STRING } = require("./lib/messageFormatFactory")
+const { messageFormatFactory, LEVEL_TO_STRING } = require('./lib/messageFormatFactory')
 
 const oneLineLogger = (opts = {}) => {
   const { colorize, ...rest } = opts
