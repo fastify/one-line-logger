@@ -15,16 +15,6 @@ declare namespace oneLineLogger {
   }
   export const messageFormatFactory: (colorize: boolean) => (log: LogDescriptor, messageKey: string) => string
 
-  export const LEVEL_TO_STRING: {
-    60: 'fatal',
-    50: 'error',
-    40: 'warn',
-    30: 'info',
-    20: 'debug',
-    10: 'trace'
-    [key: number]: string;
-  }
-
   export const oneLineLogger: OneLineLogger
   export { oneLineLogger as default}
 }
