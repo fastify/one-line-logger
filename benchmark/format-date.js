@@ -9,6 +9,5 @@ const now = Date.now()
 new benchmark.Suite()
   .add('dateformat', function () { dateformat(now, 'yyyy-mm-dd HH:MM:ss.lo') }, { minSamples: 100 })
   .add('formatDate', function () { formatDate(now) }, { minSamples: 100 })
-
   .on('cycle', function onCycle (event) { console.log(String(event.target)) })
   .run()

@@ -16,6 +16,5 @@ const log = {
 
 new benchmark.Suite()
   .add('formatMessageColorized', function () { formatMessageColorized(log, 'message') }, { minSamples: 100 })
-
   .on('cycle', function onCycle (event) { console.log(String(event.target)) })
   .run()
