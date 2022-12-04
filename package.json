@@ -10,10 +10,11 @@
     "test": "test"
   },
   "dependencies": {
-    "dateformat": "^4.6.3",
     "pino-pretty": "^9.0.1"
   },
   "devDependencies": {
+    "benchmark": "^2.1.4",
+    "dateformat": "^4.6.3",
     "fastify": "^4.3.0",
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",

@@ -1,7 +1,7 @@
 'use-strict'
 
 const pretty = require('pino-pretty')
-const dateformat = require('dateformat')
+const formatDate = require('./lib/formatDate')
 const { colorizerFactory } = pretty
 
 const LEVEL_TO_STRING = {
@@ -17,7 +17,7 @@ const messageFormatFactory = (colorize) => {
   const colorizer = colorizerFactory(colorize === true)
 
   const messageFormat = (log, messageKey) => {
-    const time = dateformat(log.time, 'yyyy-mm-dd HH:MM:ss.lo')
+    const time = formatDate(log.time)
     const level = colorizer(LEVEL_TO_STRING[log.level]).toLowerCase()
 
     const logMessages = [time, level]
