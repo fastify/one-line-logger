@@ -18,13 +18,16 @@
     "fastify": "^4.3.0",
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",
-    "tap": "^16.3.0"
+    "tap": "^16.3.0",
+    "tsd": "^0.25.0"
   },
   "scripts": {
-    "test": "tap",
-    "test:watch": "tap --watch --no-coverage-report",
     "lint": "standard | snazzy",
-    "lint:fix": "standard --fix"
+    "lint:fix": "standard --fix",
+    "test": "npm run test:unit && npm run test:typescript",
+    "test:typescript": "tsd",
+    "test:unit": "tap",
+    "test:watch": "tap --watch --no-coverage-report"
   },
   "repository": {
     "type": "git",
