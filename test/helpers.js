@@ -3,7 +3,7 @@
 const { Writable } = require('readable-stream')
 const fastify = require('fastify')
 const pino = require('pino')
-const target = require('../src')
+const target = require('..')
 
 const HOUR = 20
 const TIME = `2017-02-14 ${HOUR}:51:48.000+0800`

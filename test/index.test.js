@@ -1,7 +1,7 @@
 'use strict'
 
 const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
-const target = require('../src')
+const target = require('..')
 const tap = require('tap')
 
 const { messageFormatFactory } = target
