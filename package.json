@@ -2,28 +2,32 @@
   "name": "@fastify/one-line-logger",
   "version": "1.0.0",
   "description": "A simple formatter for fastify's logs",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "index.js",
+  "types": "types/index.d.ts",
   "directories": {
     "doc": "docs",
     "example": "examples",
     "test": "test"
   },
   "dependencies": {
-    "dateformat": "^4.6.3",
     "pino-pretty": "^9.0.1"
   },
   "devDependencies": {
+    "benchmark": "^2.1.4",
+    "dateformat": "^4.6.3",
     "fastify": "^4.3.0",
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",
-    "tap": "^16.3.0"
+    "tap": "^16.3.0",
+    "tsd": "^0.25.0"
   },
   "scripts": {
-    "test": "tap",
-    "test:watch": "tap --watch --no-coverage-report",
     "lint": "standard | snazzy",
-    "lint:fix": "standard --fix"
+    "lint:fix": "standard --fix",
+    "test": "npm run test:unit && npm run test:typescript",
+    "test:typescript": "tsd",
+    "test:unit": "tap",
+    "test:watch": "tap --watch --no-coverage-report"
   },
   "repository": {
     "type": "git",
