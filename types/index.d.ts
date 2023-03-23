@@ -13,7 +13,7 @@ declare namespace oneLineLogger {
     level: number;
     req?: Request;
   }
-  export const messageFormatFactory: (colorize: boolean) => (log: LogDescriptor, messageKey: string) => string
+  export const messageFormatFactory: (colorize: boolean, levels: Record<string, number>) => (log: LogDescriptor, messageKey: string) => string
 
   export const oneLineLogger: OneLineLogger
   export { oneLineLogger as default}

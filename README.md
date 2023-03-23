@@ -39,6 +39,31 @@ const server = fastify({
 });
 ```
 
+## Custom levels
+
+Custom levels could be used by passing it into logger opts
+
+```js
+const server = fastify({
+  logger: {
+    transport: {
+      target: "@fastify/one-line-logger",
+    },
+    customLevels: {
+      foo: 35,
+      bar: 45,
+    },
+  },
+});
+
+server.get("/", (request, reply) => {
+  request.log.info("time to foobar");
+  request.log.foo("FOO!");
+  request.log.bar("BAR!");
+  reply.send({ foobar: true });
+});
+```
+
 <a id="license"></a>
 ## License
 
