@@ -14,7 +14,7 @@ expectType<number>(({} as LogDescriptor).level)
 expectType<number>(({} as LogDescriptor).time)
 expectType<Request | undefined>(({} as LogDescriptor).req)
 
-expectType<(colorize: boolean) => (log: LogDescriptor, messageKey: string) => string>(messageFormatFactory)
+expectType<(colorize: boolean, levels: Record<string, number>) => (log: LogDescriptor, messageKey: string) => string>(messageFormatFactory)
 
 expectType<typeof oneLineLogger>(oneLineLoggerNamed)
 expectType<(opts?: pretty.PrettyOptions) => pretty.PrettyStream>(oneLineLogger)
