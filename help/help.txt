@@ -1,0 +1,10 @@
+  Usage: one-line-logger [options] [command]
+  
+  Commands:
+    help     Display help
+    version  Display version
+  
+  Options:
+    -c, --colorize              Force adding color sequences to the output
+    -v, --version               Output the version number
+    

@@ -9,8 +9,14 @@
     "example": "examples",
     "test": "test"
   },
+  "bin": {
+    "one-line-logger": "./bin.js"
+  },
   "dependencies": {
-    "pino-pretty": "^10.0.0"
+    "help-me": "^4.2.0",
+    "minimist": "^1.2.8",
+    "pino-pretty": "^10.0.0",
+    "pump": "^3.0.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",

@@ -24,11 +24,10 @@ tap.beforeEach(() => {
 })
 
 test('should log server started messages', async (t) => {
-  await server.listen({ port: 63995 })
+  await server.listen({ port: 63995, host: '127.0.0.1' })
 
   const messagesExpected = [
-    `${TIME} - info - Server listening at http://127.0.0.1:63995\n`,
-    `${TIME} - info - Server listening at http://[::1]:63995\n`
+    `${TIME} - info - Server listening at http://127.0.0.1:63995\n`
   ]
 
   // sort because the order of the messages is not guaranteed

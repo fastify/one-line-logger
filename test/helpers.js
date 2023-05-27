@@ -6,7 +6,8 @@ const pino = require('pino')
 const target = require('..')
 
 const HOUR = 20
-const TIME = `2017-02-14 ${HOUR}:51:48.000+0800`
+const MIN = 50
+const TIME = `2017-02-14 ${HOUR}:${MIN}:48.000+0800`
 const EPOCH = 1487076708000
 const TIMEZONE_OFFSET = -8 * 60
 const MESSAGE_KEY = 'message'
@@ -52,6 +53,8 @@ const mockTime = () => {
 
   // eslint-disable-next-line
   Date.prototype.getHours = () => HOUR;
+  // eslint-disable-next-line
+  Date.prototype.getMinutes = () => MIN;
 }
 
 const unmockTime = () => {
