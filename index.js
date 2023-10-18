@@ -1,4 +1,4 @@
-'use-strict'
+'use strict'
 
 const pretty = require('pino-pretty')
 const messageFormatFactory = require('./lib/messageFormatFactory')
