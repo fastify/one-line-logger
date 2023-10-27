@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "A simple formatter for fastify's logs",
   "main": "index.js",
+  "type": "commonjs",
   "types": "types/index.d.ts",
   "directories": {
     "doc": "docs",
