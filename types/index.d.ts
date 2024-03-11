@@ -8,12 +8,17 @@ declare namespace oneLineLogger {
     url: string;
   }
 
+  export interface CustomColor {
+    [key: number]: string;
+  }
+
   export type LogDescriptor = Record<string, unknown> & {
     time: number;
     level: number;
+    colors?: CustomColor;
     req?: Request;
   }
-  export const messageFormatFactory: (colorize: boolean, levels: Record<string, number>) => (log: LogDescriptor, messageKey: string) => string
+  export const messageFormatFactory: (colorize: boolean, levels: Record<string, number>, colors?: CustomColor) => (log: LogDescriptor, messageKey: string) => string
 
   export const oneLineLogger: OneLineLogger
   export { oneLineLogger as default}

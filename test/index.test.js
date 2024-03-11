@@ -119,7 +119,7 @@ logDescriptorColorizedLogPairs.forEach(([logDescriptor, logColorized]) => {
     foo: 35,
     bar: 45
   }
-  const messageFormat = messageFormatFactory(true, levels, [[35, "bgCyanBright"], [45, "yellow"]])
+  const messageFormat = messageFormatFactory(true, levels, {35: "bgCyanBright", 45: "yellow"})
 
   const logCustomLevelsLogPairs = [
     [

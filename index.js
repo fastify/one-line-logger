@@ -4,9 +4,9 @@ const pretty = require('pino-pretty')
 const messageFormatFactory = require('./lib/messageFormatFactory')
 
 const oneLineLogger = (opts = {}) => {
-  const { colorize, levels, ...rest } = opts
+  const { colorize, levels, colors, ...rest } = opts
 
-  const messageFormat = messageFormatFactory(colorize, levels)
+  const messageFormat = messageFormatFactory(colorize, levels, colors)
 
   return pretty({
     messageFormat,
