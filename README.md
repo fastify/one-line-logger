@@ -64,6 +64,36 @@ server.get("/", (request, reply) => {
 });
 ```
 
+## Custom level colors
+
+Custom levels colors could be used by passing it into logger opts. They can also overwrite the default level's colors. Check all the supported colors [here](https://github.com/jorgebucaran/colorette?tab=readme-ov-file#supported-colors).
+
+```js
+const server = fastify({
+  logger: {
+    transport: {
+      target: "@fastify/one-line-logger",
+      colors: {
+        35: "bgYellow",
+        45: "magenta",
+        60: "bgRedBright" // overwriting the `fatal` log color
+      }
+    },
+    customLevels: {
+      foo: 35,
+      bar: 45,
+    },
+  },
+});
+
+server.get("/", (request, reply) => {
+  request.log.fatal("An error occured");
+  request.log.foo("FOO!");
+  request.log.bar("BAR!");
+  reply.send({ foobar: true });
+});
+```
+
 <a id="license"></a>
 ## License
 
