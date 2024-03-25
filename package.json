@@ -11,7 +11,7 @@
     "test": "test"
   },
   "dependencies": {
-    "pino-pretty": "^10.0.0"
+    "pino-pretty": "^11.0.0"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
