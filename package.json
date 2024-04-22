@@ -21,6 +21,9 @@
     "tap": "^18.7.2",
     "tsd": "^0.31.0"
   },
+  "resolutions": {
+    "@types/node": "^20.12.7"
+  },
   "scripts": {
     "lint": "standard | snazzy",
     "lint:fix": "standard --fix",
