@@ -147,3 +147,38 @@ logDescriptorColorizedLogPairs.forEach(([logDescriptor, logColorized]) => {
     })
   })
 }
+
+{
+  const levels = {
+    foo: 35,
+    bar: 45
+  }
+  const messageFormat = messageFormatFactory(true, levels, { 35: 'bgCyanBright', 45: 'yellow' })
+
+  const logCustomLevelsLogPairs = [
+    [
+      { time: EPOCH, level: 35, [MESSAGE_KEY]: 'basic foo log' },
+      `${TIME} - \u001B[106mfoo\u001B[49m - \u001B[36mbasic foo log\u001B[39m`
+    ],
+    [
+      {
+        time: EPOCH,
+        level: 45,
+        [MESSAGE_KEY]: 'basic incoming request bar log',
+        req: {
+          method: 'GET',
+          url: '/bar'
+        }
+      },
+      `${TIME} - \u001B[33mbar\u001B[39m - GET /bar - \u001B[36mbasic incoming request bar log\u001B[39m`
+    ]
+  ]
+  logCustomLevelsLogPairs.forEach(([logDescriptor, expectedLog]) => {
+    test('format log correctly with custom colors per level', (t) => {
+      const log = messageFormat(logDescriptor, MESSAGE_KEY)
+
+      t.equal(log, expectedLog)
+      t.end()
+    })
+  })
+}
