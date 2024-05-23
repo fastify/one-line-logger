@@ -6,7 +6,11 @@ const messageFormatFactory = require('./lib/messageFormatFactory')
 const oneLineLogger = (opts = {}) => {
   const { levels, colors, ...rest } = opts
 
-  const messageFormat = messageFormatFactory(levels, colors)
+  const messageFormat = messageFormatFactory(
+    levels,
+    colors,
+    pretty.isColorSupported
+  )
 
   return pretty({
     messageFormat,
