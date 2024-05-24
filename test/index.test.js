@@ -57,13 +57,6 @@ test('format log correctly with different logDescriptor', async (t) => {
         { skip: !pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          console.log(
-            'TEST\n',
-            JSON.stringify(log, undefined, 4),
-            '\n',
-            JSON.stringify(expectedLogColored, undefined, 4),
-            '\n'
-          )
           t.equal(log, expectedLogColored)
           t.end()
         }
