@@ -4,12 +4,15 @@ const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
 const target = require('..')
 const tap = require('tap')
 const pretty = require('pino-pretty')
-
 const { messageFormatFactory } = target
 
 const { test } = tap
 
-const messageFormat = messageFormatFactory()
+const messageFormat = messageFormatFactory(
+  undefined,
+  undefined,
+  pretty.isColorSupported
+)
 
 tap.before(() => {
   mockTime()
@@ -54,6 +57,13 @@ test('format log correctly with different logDescriptor', async (t) => {
         { skip: !pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
+          console.log(
+            'TEST\n',
+            JSON.stringify(log, undefined, 4),
+            '\n',
+            JSON.stringify(expectedLogColored, undefined, 4),
+            '\n'
+          )
           t.equal(log, expectedLogColored)
           t.end()
         }
@@ -124,7 +134,11 @@ test('format log correctly with custom levels', async (t) => {
     foo: 35,
     bar: 45
   }
-  const messageFormat = messageFormatFactory(levels)
+  const messageFormat = messageFormatFactory(
+    levels,
+    undefined,
+    pretty.isColorSupported
+  )
 
   const logCustomLevelsLogPairs = [
     [
@@ -177,10 +191,14 @@ test('format log correctly with custom colors per level', async (t) => {
     foo: 35,
     bar: 45
   }
-  const messageFormat = messageFormatFactory(levels, {
-    35: 'bgCyanBright',
-    45: 'yellow'
-  })
+  const messageFormat = messageFormatFactory(
+    levels,
+    {
+      35: 'bgCyanBright',
+      45: 'yellow'
+    },
+    pretty.isColorSupported
+  )
 
   const logCustomLevelsLogPairs = [
     [
