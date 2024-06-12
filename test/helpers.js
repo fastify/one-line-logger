@@ -17,7 +17,6 @@ const pinoFactory = (opts) => {
   return pino(
     { level },
     target({
-      colorize: false,
       ...opts
     })
   )
@@ -57,9 +56,9 @@ const mockTime = () => {
 const unmockTime = () => {
   Date.now = dateOriginalNow
   // eslint-disable-next-line
-  Date.prototype.getTimezoneOffset = dateGetTimezoneOffset
+  Date.prototype.getTimezoneOffset = dateGetTimezoneOffset;
   // eslint-disable-next-line
-  Date.prototype.getHours = dateOriginalGetHours
+  Date.prototype.getHours = dateOriginalGetHours;
 }
 
 module.exports = {
