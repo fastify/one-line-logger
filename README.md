@@ -39,6 +39,22 @@ const server = fastify({
 });
 ```
 
+## Colors
+
+Colors are enabled by default when supported. To manually disable the colors you need to set the `transport.colorize` option to `false`. For more options check the `colorette` [docs](https://github.com/jorgebucaran/colorette?tab=readme-ov-file#environment).
+
+```js
+const server = fastify({
+  logger: {
+    transport: {
+      target: "@fastify/one-line-logger",
+      colorize: false,
+    },
+  },
+});
+```
+
+
 ## Custom levels
 
 Custom levels could be used by passing it into logger opts
