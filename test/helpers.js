@@ -34,7 +34,7 @@ const serverFactory = (messages, opts, fastifyOpts) => {
   const pinoLogger = pinoFactory({ destination, ...opts })
 
   return fastify({
-    logger: pinoLogger,
+    loggerInstance: pinoLogger,
     ...fastifyOpts
   })
 }
