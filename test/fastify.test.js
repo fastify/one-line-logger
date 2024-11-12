@@ -2,22 +2,20 @@
 
 const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
 const pretty = require('pino-pretty')
-const tap = require('tap')
-
-const { test } = tap
+const { before, beforeEach, after, test } = require('node:test')
 
 const messages = []
 let server = serverFactory(messages, { colorize: false })
 
-tap.before(() => {
+before(() => {
   mockTime()
 })
 
-tap.teardown(() => {
+after(() => {
   unmockTime()
 })
 
-tap.beforeEach(() => {
+beforeEach(() => {
   // empty messages array
   messages.splice(0, messages.length)
 
@@ -27,21 +25,20 @@ tap.beforeEach(() => {
 test('should log server started messages', async (t) => {
   t.beforeEach(async () => {
     await server.listen({ port: 63995 })
-    t.teardown(async () => await server.close())
+    t.afterEach(async () => await server.close())
   })
 
-  t.test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
+  await t.test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
     const messagesExpected = [
       `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mServer listening at http://127.0.0.1:63995\x1B[39m\n`,
       `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mServer listening at http://[::1]:63995\x1B[39m\n`
     ]
 
     // sort because the order of the messages is not guaranteed
-    t.same(messages.sort(), messagesExpected.sort())
-    t.end()
+    t.assert.deepStrictEqual(messages.sort(), messagesExpected.sort())
   })
 
-  t.test(
+  await t.test(
     'colors not supported in TTY',
     { skip: pretty.isColorSupported },
     (t) => {
@@ -51,8 +48,7 @@ test('should log server started messages', async (t) => {
       ]
 
       // sort because the order of the messages is not guaranteed
-      t.same(messages.sort(), messagesExpected.sort())
-      t.end()
+      t.assert.deepStrictEqual(messages.sort(), messagesExpected.sort())
     }
   )
 })
@@ -72,7 +68,7 @@ methods.forEach((method) => {
       })
     })
 
-    t.test(
+    await t.test(
       'colors supported in TTY',
       { skip: !pretty.isColorSupported },
       (t) => {
@@ -80,12 +76,11 @@ methods.forEach((method) => {
           `${TIME} - \x1B[32minfo\x1B[39m - ${method} /path - \x1B[36mincoming request\x1B[39m\n`,
           `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mrequest completed\x1B[39m\n`
         ]
-        t.same(messages, messagesExpected)
-        t.end()
+        t.assert.deepEqual(messages, messagesExpected)
       }
     )
 
-    t.test(
+    await t.test(
       'colors not supported in TTY',
       { skip: pretty.isColorSupported },
       (t) => {
@@ -93,8 +88,7 @@ methods.forEach((method) => {
           `${TIME} - info - ${method} /path - incoming request\n`,
           `${TIME} - info - request completed\n`
         ]
-        t.same(messages, messagesExpected)
-        t.end()
+        t.assert.deepEqual(messages, messagesExpected)
       }
     )
   })
@@ -118,7 +112,7 @@ test('should handle user defined log', async (t) => {
     await server.inject('/a-path-with-user-defined-log')
   })
 
-  t.test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
+  await t.test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
     const messagesExpected = [
       `${TIME} - \x1B[32minfo\x1B[39m - GET /a-path-with-user-defined-log - \x1B[36mincoming request\x1B[39m\n`,
       `${TIME} - \x1B[41mfatal\x1B[49m - \x1B[36ma user defined fatal log\x1B[39m\n`,
@@ -129,11 +123,10 @@ test('should handle user defined log', async (t) => {
       `${TIME} - \x1B[90mtrace\x1B[39m - \x1B[36ma user defined trace log\x1B[39m\n`,
       `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mrequest completed\x1B[39m\n`
     ]
-    t.same(messages, messagesExpected)
-    t.end()
+    t.assert.deepStrictEqual(messages, messagesExpected)
   })
 
-  t.test(
+  await t.test(
     'colors not supported in TTY',
     { skip: pretty.isColorSupported },
     (t) => {
@@ -147,8 +140,7 @@ test('should handle user defined log', async (t) => {
         `${TIME} - trace - a user defined trace log\n`,
         `${TIME} - info - request completed\n`
       ]
-      t.same(messages, messagesExpected)
-      t.end()
+      t.assert.deepStrictEqual(messages, messagesExpected)
     }
   )
 })
