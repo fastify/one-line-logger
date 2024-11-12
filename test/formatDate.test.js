@@ -1,7 +1,7 @@
 'use strict'
 
 const formatDate = require('../lib/formatDate')
-const test = require('tap').test
+const { test } = require('node:test')
 
 const timeFormatRE = /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d\d\d[+-]\d\d\d\d$/
 
@@ -12,6 +12,6 @@ test('should generate valid formatted time', (t) => {
 
   for (let i = 0; i < iterations; ++i) {
     const randomInt = Math.floor(Math.random() * maxTimestamp)
-    t.ok(timeFormatRE.test(formatDate(randomInt)))
+    t.assert.ok(timeFormatRE.test(formatDate(randomInt)))
   }
 })

@@ -1,5 +1,5 @@
 import pretty from 'pino-pretty';
-import { expectType } from "tsd";
+import { expectType, expectAssignable } from "tsd";
 import oneLineLogger, {
   CustomColor,
   LogDescriptor,
@@ -18,4 +18,4 @@ expectType<Request | undefined>(({} as LogDescriptor).req)
 expectType<(colorize: boolean, levels: Record<string, number>, colors?: CustomColor) => (log: LogDescriptor, messageKey: string) => string>(messageFormatFactory)
 
 expectType<typeof oneLineLogger>(oneLineLoggerNamed)
-expectType<(opts?: pretty.PrettyOptions) => pretty.PrettyStream>(oneLineLogger)
+expectAssignable<(opts?: pretty.PrettyOptions) => pretty.PrettyStream>(oneLineLogger)

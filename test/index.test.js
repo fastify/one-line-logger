@@ -2,11 +2,9 @@
 
 const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
 const target = require('..')
-const tap = require('tap')
+const { before, after, test } = require('node:test')
 const pretty = require('pino-pretty')
 const { messageFormatFactory } = target
-
-const { test } = tap
 
 const messageFormat = messageFormatFactory(
   undefined,
@@ -14,18 +12,16 @@ const messageFormat = messageFormatFactory(
   pretty.isColorSupported
 )
 
-tap.before(() => {
+before(() => {
   mockTime()
 })
 
-tap.teardown(() => {
+after(() => {
   unmockTime()
 })
 
 test('able to instantiate target without arguments', (t) => {
   target()
-  t.pass()
-  t.end()
 })
 
 test('format log correctly with different logDescriptor', async (t) => {
@@ -50,15 +46,14 @@ test('format log correctly with different logDescriptor', async (t) => {
     ]
   ]
 
-  await logDescriptorLogPairs.forEach(
+  await Promise.all(logDescriptorLogPairs.map(
     async ([logDescriptor, expectedLogColored, expectedLogUncolored]) => {
       await t.test(
         'colors supported in TTY',
         { skip: !pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogColored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogColored)
         }
       )
 
@@ -67,12 +62,11 @@ test('format log correctly with different logDescriptor', async (t) => {
         { skip: pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogUncolored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogUncolored)
         }
       )
     }
-  )
+  ))
 })
 
 test('colorize log correctly with different logDescriptor', async (t) => {
@@ -97,15 +91,14 @@ test('colorize log correctly with different logDescriptor', async (t) => {
     ]
   ]
 
-  await logDescriptorColorizedLogPairs.forEach(
+  await Promise.all(logDescriptorColorizedLogPairs.map(
     async ([logDescriptor, expectedLogColored, expectedLogUncolored]) => {
       await t.test(
         'colors supported in TTY',
         { skip: !pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogColored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogColored)
         }
       )
 
@@ -114,12 +107,11 @@ test('colorize log correctly with different logDescriptor', async (t) => {
         { skip: pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogUncolored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogUncolored)
         }
       )
     }
-  )
+  ))
 })
 
 test('format log correctly with custom levels', async (t) => {
@@ -154,15 +146,14 @@ test('format log correctly with custom levels', async (t) => {
     ]
   ]
 
-  await logCustomLevelsLogPairs.forEach(
+  await Promise.all(logCustomLevelsLogPairs.map(
     async ([logDescriptor, expectedLogColored, expectedLogUncolored]) => {
       await t.test(
         'colors supported in TTY',
         { skip: !pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogColored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogColored)
         }
       )
 
@@ -171,12 +162,11 @@ test('format log correctly with custom levels', async (t) => {
         { skip: pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogUncolored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogUncolored)
         }
       )
     }
-  )
+  ))
 })
 
 test('format log correctly with custom colors per level', async (t) => {
@@ -214,15 +204,14 @@ test('format log correctly with custom colors per level', async (t) => {
     ]
   ]
 
-  await logCustomLevelsLogPairs.forEach(
+  await Promise.all(logCustomLevelsLogPairs.map(
     async ([logDescriptor, expectedLogColored, expectedLogUncolored]) => {
       await t.test(
         'colors supported in TTY',
         { skip: !pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogColored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogColored)
         }
       )
 
@@ -231,10 +220,9 @@ test('format log correctly with custom colors per level', async (t) => {
         { skip: pretty.isColorSupported },
         (t) => {
           const log = messageFormat(logDescriptor, MESSAGE_KEY)
-          t.equal(log, expectedLogUncolored)
-          t.end()
+          t.assert.strictEqual(log, expectedLogUncolored)
         }
       )
     }
-  )
+  ))
 })
