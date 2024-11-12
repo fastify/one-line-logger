@@ -1,6 +1,6 @@
 {
   "name": "@fastify/one-line-logger",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple formatter for fastify's logs",
   "main": "index.js",
   "type": "commonjs",
