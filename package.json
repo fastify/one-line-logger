@@ -35,6 +35,10 @@
     "type": "git",
     "url": "git+https://github.com/fastify/one-line-logger.git"
   },
+  "bugs": {
+    "url": "https://github.com/fastify/one-line-logger/issues"
+  },
+  "homepage": "https://github.com/fastify/one-line-logger#readme",
   "keywords": [
     "fastify",
     "logger",
