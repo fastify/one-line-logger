@@ -16,16 +16,15 @@
   "devDependencies": {
     "benchmark": "^2.1.4",
     "fastify": "^5.0.0",
-    "snazzy": "^9.0.0",
-    "standard": "^17.1.0",
+    "neostandard": "^0.11.9",
     "tsd": "^0.31.0"
   },
   "resolutions": {
     "@types/node": "^20.12.7"
   },
   "scripts": {
-    "lint": "standard | snazzy",
-    "lint:fix": "standard --fix",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
     "test:typescript": "tsd",
     "test:unit": "node --test --experimental-test-coverage",

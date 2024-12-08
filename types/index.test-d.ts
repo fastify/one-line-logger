@@ -1,12 +1,12 @@
-import pretty from 'pino-pretty';
-import { expectType, expectAssignable } from "tsd";
+import pretty from 'pino-pretty'
+import { expectType, expectAssignable } from 'tsd'
 import oneLineLogger, {
   CustomColor,
   LogDescriptor,
   Request,
   messageFormatFactory,
   oneLineLogger as oneLineLoggerNamed
-} from "..";
+} from '..'
 
 expectType<string>(({} as Request).method)
 expectType<string>(({} as Request).url)
