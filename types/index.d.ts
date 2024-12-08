@@ -21,8 +21,8 @@ declare namespace oneLineLogger {
   export const messageFormatFactory: (colorize: boolean, levels: Record<string, number>, colors?: CustomColor) => (log: LogDescriptor, messageKey: string) => string
 
   export const oneLineLogger: OneLineLogger
-  export { oneLineLogger as default}
+  export { oneLineLogger as default }
 }
 
-declare function oneLineLogger(...params: Parameters<OneLineLogger>): ReturnType<OneLineLogger>
+declare function oneLineLogger (...params: Parameters<OneLineLogger>): ReturnType<OneLineLogger>
 export = oneLineLogger
