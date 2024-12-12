@@ -1,6 +1,6 @@
 'use strict'
 
-const { Writable } = require('readable-stream')
+const { Writable } = require('node:stream')
 const fastify = require('fastify')
 const pino = require('pino')
 const target = require('..')
