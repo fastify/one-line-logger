@@ -1,7 +1,12 @@
 <a id="@fastify/one-line-logger"></a>
 # @fastify/one-line-logger
 
-`@fastify/one-line-logger` helps you format fastify's log into a nice one line message:
+
+[![CI](https://github.com/fastify/one-line-logger/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fastify/one-line-logger/actions/workflows/ci.yml)
+[![NPM version](https://img.shields.io/npm/v/@fastify/one-line-logger.svg?style=flat)](https://www.npmjs.com/package/@fastify/one-line-logger)
+[![neostandard javascript style](https://img.shields.io/badge/code_style-neostandard-brightgreen?style=flat)](https://github.com/neostandard/neostandard)
+
+`@fastify/one-line-logger` helps you format fastify's log into a nice one-line message:
 
 ```
 YYYY-MM-dd HH:mm:ss.SSSTZ - <level> - <method> <route path> - <message>
@@ -82,7 +87,7 @@ server.get("/", (request, reply) => {
 
 ## Custom level colors
 
-Custom levels colors could be used by passing it into logger opts. They can also overwrite the default level's colors. Check all the supported colors [here](https://github.com/jorgebucaran/colorette?tab=readme-ov-file#supported-colors).
+Custom level colors can be used by passing it into logger opts. They can also overwrite the default level's colors. Check all the supported colors [here](https://github.com/jorgebucaran/colorette?tab=readme-ov-file#supported-colors).
 
 ```js
 const server = fastify({
@@ -113,4 +118,4 @@ server.get("/", (request, reply) => {
 <a id="license"></a>
 ## License
 
-MIT License
+Licensed under [MIT](./LICENSE).
