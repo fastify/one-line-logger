@@ -20,7 +20,7 @@ after(() => {
   unmockTime()
 })
 
-test('able to instantiate target without arguments', (t) => {
+test('able to instantiate target without arguments', () => {
   target()
 })
 
