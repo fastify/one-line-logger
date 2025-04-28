@@ -1,6 +1,7 @@
-'use strict'
+'use strict';
 
 module.exports = require('neostandard')({
   ignores: require('neostandard').resolveIgnoresFromGitignore(),
-  ts: true
-})
+  ts: true,
+  semi: true,
+});
