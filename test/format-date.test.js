@@ -1,6 +1,6 @@
 'use strict'
 
-const formatDate = require('../lib/formatDate')
+const formatDate = require('../lib/format-date')
 const { test } = require('node:test')
 
 const timeFormatRE = /^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\.\d\d\d[+-]\d\d\d\d$/
