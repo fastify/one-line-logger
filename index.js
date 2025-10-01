@@ -1,7 +1,7 @@
 'use strict'
 
 const pretty = require('pino-pretty')
-const messageFormatFactory = require('./lib/message-format-factory')
+const { messageFormatFactory } = require('./lib/message-format-factory')
 
 const oneLineLogger = (opts = {}) => {
   const { levels, colors, ...rest } = opts

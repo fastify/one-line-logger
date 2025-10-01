@@ -1,8 +1,8 @@
 'use strict'
 
-const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
-const pretty = require('pino-pretty')
 const { before, beforeEach, after, test } = require('node:test')
+const pretty = require('pino-pretty')
+const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
 
 const messages = []
 let server = serverFactory(messages, { colorize: false })

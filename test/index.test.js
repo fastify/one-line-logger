@@ -1,10 +1,9 @@
 'use strict'
 
-const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
-const target = require('..')
 const { before, after, test } = require('node:test')
 const pretty = require('pino-pretty')
-const { messageFormatFactory } = target
+const { messageFormatFactory, oneLineLogger } = require('..')
+const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
 
 const messageFormat = messageFormatFactory(
   undefined,
@@ -20,8 +19,8 @@ after(() => {
   unmockTime()
 })
 
-test('able to instantiate target without arguments', () => {
-  target()
+test('able to instantiate oneLineLogger without arguments', () => {
+  oneLineLogger()
 })
 
 test('format log correctly with different logDescriptor', async (t) => {

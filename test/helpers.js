@@ -3,7 +3,7 @@
 const { Writable } = require('node:stream')
 const fastify = require('fastify')
 const pino = require('pino')
-const target = require('..')
+const { oneLineLogger } = require('..')
 
 const HOUR = 20
 const TIME = `2017-02-14 ${HOUR}:51:48.000+0800`
@@ -16,7 +16,7 @@ const pinoFactory = (opts) => {
 
   return pino(
     { level },
-    target({
+    oneLineLogger({
       ...opts
     })
   )
