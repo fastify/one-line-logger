@@ -5,7 +5,7 @@ const pretty = require('pino-pretty')
 const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
 
 let messages = []
-let server = serverFactory(messages, { colorize: false })
+let server = serverFactory(messages = [], { colorize: false })
 
 before(() => {
   mockTime()
@@ -16,8 +16,7 @@ after(() => {
 })
 
 beforeEach(() => {
-  messages = []
-  server = serverFactory(messages)
+  server = serverFactory(messages = [])
 })
 
 describe('should log server started messages', () => {
