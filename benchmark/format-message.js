@@ -1,7 +1,7 @@
 'use strict'
 
-const benchmark = require('benchmark')
-const messageFormatFactory = require('../lib/messageFormatFactory')
+const { Bench } = require('tinybench')
+const messageFormatFactory = require('../lib/message-format-factory')
 
 const colors = {
   60: 'red',
@@ -22,7 +22,10 @@ const log = {
   }
 }
 
-new benchmark.Suite()
-  .add('formatMessageColorized', function () { formatMessageColorized(log, 'message') }, { minSamples: 100 })
-  .on('cycle', function onCycle (event) { console.log(String(event.target)) })
-  .run()
+const benchmark = new Bench()
+
+benchmark.add('formatMessageColorized', function () { formatMessageColorized(log, 'message') })
+
+benchmark.run().then(() => {
+  console.table(benchmark.table())
+})
