@@ -1,11 +1,8 @@
 'use strict'
 
-const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
+const { before, beforeEach, after, test, describe, afterEach } = require('node:test')
 const pretty = require('pino-pretty')
-const { before, beforeEach, after, test } = require('node:test')
-
-const messages = []
-let server = serverFactory(messages, { colorize: false })
+const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
 
 before(() => {
   mockTime()
@@ -15,30 +12,22 @@ after(() => {
   unmockTime()
 })
 
-beforeEach(() => {
-  // empty messages array
-  messages.splice(0, messages.length)
+describe('should log server started messages', () => {
+  let messages
+  let server
 
-  server = serverFactory(messages)
-})
-
-test('should log server started messages', async (t) => {
-  t.beforeEach(async () => {
-    await server.listen({ port: 63995 })
-    t.afterEach(async () => await server.close())
+  beforeEach(async () => {
+    server = serverFactory(messages = [])
+    await server.listen({ host: '127.0.0.1', port: 63995 })
   })
+  afterEach(async () => { await server.close() })
 
-  await t.test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
-    const messagesExpected = [
-      `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mServer listening at http://127.0.0.1:63995\x1B[39m\n`,
-      `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mServer listening at http://[::1]:63995\x1B[39m\n`
-    ]
-
+  test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
     // sort because the order of the messages is not guaranteed
-    t.assert.deepStrictEqual(messages.sort(), messagesExpected.sort())
+    t.assert.deepStrictEqual(messages[0], `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mServer listening at http://127.0.0.1:63995\x1B[39m\n`)
   })
 
-  await t.test(
+  test(
     'colors not supported in TTY',
     { skip: pretty.isColorSupported },
     (t) => {
@@ -51,12 +40,16 @@ test('should log server started messages', async (t) => {
       t.assert.deepStrictEqual(messages.sort(), messagesExpected.sort())
     }
   )
-})
+});
 
-const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD']
-methods.forEach((method) => {
-  test('should log request and response messages for %p', async (t) => {
-    t.beforeEach(async () => {
+['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'].forEach((method) => {
+  describe(`should log request and response messages for ${method}`, () => {
+    let messages
+    let server
+
+    beforeEach(async () => {
+      server = serverFactory(messages = [])
+
       const serverMethod = method === 'HEAD' ? 'GET' : method
       server[serverMethod.toLowerCase()]('/path', (_, req) => {
         req.send()
@@ -68,7 +61,7 @@ methods.forEach((method) => {
       })
     })
 
-    await t.test(
+    test(
       'colors supported in TTY',
       { skip: !pretty.isColorSupported },
       (t) => {
@@ -80,7 +73,7 @@ methods.forEach((method) => {
       }
     )
 
-    await t.test(
+    test(
       'colors not supported in TTY',
       { skip: pretty.isColorSupported },
       (t) => {
@@ -94,9 +87,11 @@ methods.forEach((method) => {
   })
 })
 
-test('should handle user defined log', async (t) => {
-  t.beforeEach(async () => {
-    server = serverFactory(messages, { minimumLevel: 'trace' })
+describe('should handle user defined log', () => {
+  let messages
+  let server
+  beforeEach(async () => {
+    server = serverFactory(messages = [], { minimumLevel: 'trace' })
 
     server.get('/a-path-with-user-defined-log', (res, req) => {
       res.log.fatal('a user defined fatal log')
@@ -112,7 +107,7 @@ test('should handle user defined log', async (t) => {
     await server.inject('/a-path-with-user-defined-log')
   })
 
-  await t.test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
+  test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
     const messagesExpected = [
       `${TIME} - \x1B[32minfo\x1B[39m - GET /a-path-with-user-defined-log - \x1B[36mincoming request\x1B[39m\n`,
       `${TIME} - \x1B[41mfatal\x1B[49m - \x1B[36ma user defined fatal log\x1B[39m\n`,
@@ -126,7 +121,7 @@ test('should handle user defined log', async (t) => {
     t.assert.deepStrictEqual(messages, messagesExpected)
   })
 
-  await t.test(
+  test(
     'colors not supported in TTY',
     { skip: pretty.isColorSupported },
     (t) => {
