@@ -4,9 +4,6 @@ const { before, beforeEach, after, test, describe, afterEach } = require('node:t
 const pretty = require('pino-pretty')
 const { serverFactory, TIME, unmockTime, mockTime } = require('./helpers')
 
-let messages = []
-let server = serverFactory(messages = [], { colorize: false })
-
 before(() => {
   mockTime()
 })
@@ -15,12 +12,12 @@ after(() => {
   unmockTime()
 })
 
-beforeEach(() => {
-  server = serverFactory(messages = [])
-})
-
 describe('should log server started messages', () => {
+  let messages
+  let server
+
   beforeEach(async () => {
+    server = serverFactory(messages = [])
     await server.listen({ host: '127.0.0.1', port: 63995 })
   })
   afterEach(async () => { await server.close() })
@@ -46,8 +43,13 @@ describe('should log server started messages', () => {
 });
 
 ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'].forEach((method) => {
-  describe(`should log request and response messages for ${method}`, async (t) => {
+  describe(`should log request and response messages for ${method}`, () => {
+    let messages
+    let server
+
     beforeEach(async () => {
+      server = serverFactory(messages = [])
+
       const serverMethod = method === 'HEAD' ? 'GET' : method
       server[serverMethod.toLowerCase()]('/path', (_, req) => {
         req.send()
@@ -86,8 +88,10 @@ describe('should log server started messages', () => {
 })
 
 describe('should handle user defined log', () => {
+  let messages
+  let server
   beforeEach(async () => {
-    server = serverFactory(messages, { minimumLevel: 'trace' })
+    server = serverFactory(messages = [], { minimumLevel: 'trace' })
 
     server.get('/a-path-with-user-defined-log', (res, req) => {
       res.log.fatal('a user defined fatal log')
