@@ -147,3 +147,7 @@ yarn.lock
 # editor files
 .vscode
 .idea
+
+# claude files
+CLAUDE.md
+.claude
