@@ -66,8 +66,8 @@ describe('should log server started messages', () => {
       { skip: !pretty.isColorSupported },
       (t) => {
         const messagesExpected = [
-          `${TIME} - \x1B[32minfo\x1B[39m - ${method} /path - \x1B[36mincoming request\x1B[39m\n`,
-          `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mrequest completed\x1B[39m\n`
+          `${TIME} - \x1B[32minfo\x1B[39m - req-1 - ${method} /path - \x1B[36mincoming request\x1B[39m\n`,
+          `${TIME} - \x1B[32minfo\x1B[39m - req-1 - \x1B[36mrequest completed\x1B[39m\n`
         ]
         t.assert.deepEqual(messages, messagesExpected)
       }
@@ -78,8 +78,8 @@ describe('should log server started messages', () => {
       { skip: pretty.isColorSupported },
       (t) => {
         const messagesExpected = [
-          `${TIME} - info - ${method} /path - incoming request\n`,
-          `${TIME} - info - request completed\n`
+          `${TIME} - info - req-1 - ${method} /path - incoming request\n`,
+          `${TIME} - info - req-1 - request completed\n`
         ]
         t.assert.deepEqual(messages, messagesExpected)
       }
@@ -109,14 +109,14 @@ describe('should handle user defined log', () => {
 
   test('colors supported in TTY', { skip: !pretty.isColorSupported }, (t) => {
     const messagesExpected = [
-      `${TIME} - \x1B[32minfo\x1B[39m - GET /a-path-with-user-defined-log - \x1B[36mincoming request\x1B[39m\n`,
-      `${TIME} - \x1B[41mfatal\x1B[49m - \x1B[36ma user defined fatal log\x1B[39m\n`,
-      `${TIME} - \x1B[31merror\x1B[39m - \x1B[36ma user defined error log\x1B[39m\n`,
-      `${TIME} - \x1B[33mwarn\x1B[39m - \x1B[36ma user defined warn log\x1B[39m\n`,
-      `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36ma user defined info log\x1B[39m\n`,
-      `${TIME} - \x1B[34mdebug\x1B[39m - \x1B[36ma user defined debug log\x1B[39m\n`,
-      `${TIME} - \x1B[90mtrace\x1B[39m - \x1B[36ma user defined trace log\x1B[39m\n`,
-      `${TIME} - \x1B[32minfo\x1B[39m - \x1B[36mrequest completed\x1B[39m\n`
+      `${TIME} - \x1B[32minfo\x1B[39m - req-1 - GET /a-path-with-user-defined-log - \x1B[36mincoming request\x1B[39m\n`,
+      `${TIME} - \x1B[41mfatal\x1B[49m - req-1 - \x1B[36ma user defined fatal log\x1B[39m\n`,
+      `${TIME} - \x1B[31merror\x1B[39m - req-1 - \x1B[36ma user defined error log\x1B[39m\n`,
+      `${TIME} - \x1B[33mwarn\x1B[39m - req-1 - \x1B[36ma user defined warn log\x1B[39m\n`,
+      `${TIME} - \x1B[32minfo\x1B[39m - req-1 - \x1B[36ma user defined info log\x1B[39m\n`,
+      `${TIME} - \x1B[34mdebug\x1B[39m - req-1 - \x1B[36ma user defined debug log\x1B[39m\n`,
+      `${TIME} - \x1B[90mtrace\x1B[39m - req-1 - \x1B[36ma user defined trace log\x1B[39m\n`,
+      `${TIME} - \x1B[32minfo\x1B[39m - req-1 - \x1B[36mrequest completed\x1B[39m\n`
     ]
     t.assert.deepStrictEqual(messages, messagesExpected)
   })
@@ -126,14 +126,14 @@ describe('should handle user defined log', () => {
     { skip: pretty.isColorSupported },
     (t) => {
       const messagesExpected = [
-        `${TIME} - info - GET /a-path-with-user-defined-log - incoming request\n`,
-        `${TIME} - fatal - a user defined fatal log\n`,
-        `${TIME} - error - a user defined error log\n`,
-        `${TIME} - warn - a user defined warn log\n`,
-        `${TIME} - info - a user defined info log\n`,
-        `${TIME} - debug - a user defined debug log\n`,
-        `${TIME} - trace - a user defined trace log\n`,
-        `${TIME} - info - request completed\n`
+        `${TIME} - info - req-1 - GET /a-path-with-user-defined-log - incoming request\n`,
+        `${TIME} - fatal - req-1 - a user defined fatal log\n`,
+        `${TIME} - error - req-1 - a user defined error log\n`,
+        `${TIME} - warn - req-1 - a user defined warn log\n`,
+        `${TIME} - info - req-1 - a user defined info log\n`,
+        `${TIME} - debug - req-1 - a user defined debug log\n`,
+        `${TIME} - trace - req-1 - a user defined trace log\n`,
+        `${TIME} - info - req-1 - request completed\n`
       ]
       t.assert.deepStrictEqual(messages, messagesExpected)
     }

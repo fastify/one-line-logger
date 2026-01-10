@@ -225,3 +225,49 @@ test('format log correctly with custom colors per level', async (t) => {
     }
   ))
 })
+
+test('format log correctly with reqId', async (t) => {
+  const logDescriptorLogPairs = [
+    [
+      { time: EPOCH, level: 30, reqId: 'req-1', [MESSAGE_KEY]: 'log with reqId' },
+      `${TIME} - \x1B[32minfo\x1B[39m - req-1 - \x1B[36mlog with reqId\x1B[39m`,
+      `${TIME} - info - req-1 - log with reqId`
+    ],
+    [
+      {
+        time: EPOCH,
+        level: 30,
+        reqId: 'req-2',
+        [MESSAGE_KEY]: 'incoming request with reqId',
+        req: {
+          method: 'POST',
+          url: '/api/users'
+        }
+      },
+      `${TIME} - \x1B[32minfo\x1B[39m - req-2 - POST /api/users - \x1B[36mincoming request with reqId\x1B[39m`,
+      `${TIME} - info - req-2 - POST /api/users - incoming request with reqId`
+    ]
+  ]
+
+  await Promise.all(logDescriptorLogPairs.map(
+    async ([logDescriptor, expectedLogColored, expectedLogUncolored]) => {
+      await t.test(
+        'colors supported in TTY',
+        { skip: !pretty.isColorSupported },
+        (t) => {
+          const log = messageFormat(logDescriptor, MESSAGE_KEY)
+          t.assert.strictEqual(log, expectedLogColored)
+        }
+      )
+
+      await t.test(
+        'colors not supported in TTY',
+        { skip: pretty.isColorSupported },
+        (t) => {
+          const log = messageFormat(logDescriptor, MESSAGE_KEY)
+          t.assert.strictEqual(log, expectedLogUncolored)
+        }
+      )
+    }
+  ))
+})
