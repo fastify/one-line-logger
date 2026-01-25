@@ -94,10 +94,12 @@ const server = fastify({
   logger: {
     transport: {
       target: "@fastify/one-line-logger",
-      colors: {
-        35: "bgYellow",
-        45: "magenta",
-        60: "bgRedBright" // overwriting the `fatal` log color
+      options: {
+        colors: {
+          35: "bgYellow",
+          45: "magenta",
+          60: "bgRedBright" // overwriting the `fatal` log color
+        }
       }
     },
     customLevels: {
@@ -114,6 +116,43 @@ server.get("/", (request, reply) => {
   reply.send({ foobar: true });
 });
 ```
+
+## Time-only format
+
+To output only the time without the date and timezone:
+
+```js
+const server = fastify({
+  logger: {
+    transport: {
+      target: "@fastify/one-line-logger",
+      options: { timeOnly: true }
+    }
+  }
+});
+```
+
+Output: `01:08:02.194 - info - GET / - incoming request`
+
+## Custom time format
+
+Use the `customTimeFormat` option with a [dateformat](https://www.npmjs.com/package/dateformat) pattern:
+
+```js
+const server = fastify({
+  logger: {
+    transport: {
+      target: "@fastify/one-line-logger",
+      options: { customTimeFormat: "HH:MM:ss" }
+    }
+  }
+});
+```
+
+Common patterns:
+- `"HH:MM:ss"` → `01:08:02`
+- `"yyyy-mm-dd HH:MM:ss"` → `2022-08-11 01:08:02`
+- `"isoDateTime"` → `2022-08-11T01:08:02+0100`
 
 <a id="license"></a>
 ## License

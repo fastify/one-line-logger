@@ -4,12 +4,13 @@ const pretty = require('pino-pretty')
 const { messageFormatFactory } = require('./lib/message-format-factory')
 
 const oneLineLogger = (opts = {}) => {
-  const { levels, colors, ...rest } = opts
+  const { levels, colors, timeOnly, customTimeFormat, ...rest } = opts
 
   const messageFormat = messageFormatFactory(
     levels,
     colors,
-    opts.colorize ?? pretty.isColorSupported
+    opts.colorize ?? pretty.isColorSupported,
+    { timeOnly, customTimeFormat }
   )
 
   return pretty({

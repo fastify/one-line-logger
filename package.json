@@ -11,6 +11,7 @@
     "test": "test"
   },
   "dependencies": {
+    "dateformat": "^5.0.3",
     "pino-pretty": "^13.0.0"
   },
   "devDependencies": {

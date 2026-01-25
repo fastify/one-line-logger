@@ -7,6 +7,7 @@ const { oneLineLogger } = require('..')
 
 const HOUR = 20
 const TIME = `2017-02-14 ${HOUR}:51:48.000+0800`
+const TIME_ONLY = `${HOUR}:51:48.000`
 const EPOCH = 1487076708000
 const TIMEZONE_OFFSET = -8 * 60
 const MESSAGE_KEY = 'message'
@@ -63,6 +64,7 @@ const unmockTime = () => {
 
 module.exports = {
   TIME,
+  TIME_ONLY,
   EPOCH,
   MESSAGE_KEY,
   TIMEZONE_OFFSET,
