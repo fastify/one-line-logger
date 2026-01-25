@@ -346,3 +346,10 @@ test('oneLineLogger with timeOnly option', () => {
 test('oneLineLogger with customTimeFormat option', () => {
   oneLineLogger({ customTimeFormat: 'HH:MM:ss' })
 })
+
+test('oneLineLogger throws when both timeOnly and customTimeFormat are specified', (t) => {
+  t.assert.throws(
+    () => oneLineLogger({ timeOnly: true, customTimeFormat: 'HH:MM:ss' }),
+    { message: 'Cannot use both timeOnly and customTimeFormat options together' }
+  )
+})

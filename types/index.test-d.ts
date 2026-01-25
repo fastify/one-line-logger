@@ -1,5 +1,5 @@
 import pretty from 'pino-pretty'
-import { expectType, expectAssignable } from 'tsd'
+import { expectType, expectAssignable, expectError } from 'tsd'
 import oneLineLogger, {
   CustomColor,
   LogDescriptor,
@@ -30,6 +30,5 @@ expectAssignable<pretty.PrettyStream>(loggerTimeOnly)
 const loggerCustomFormat = oneLineLogger({ customTimeFormat: 'HH:MM:ss' })
 expectAssignable<pretty.PrettyStream>(loggerCustomFormat)
 
-// Test both options together (customTimeFormat takes precedence)
-const loggerBoth = oneLineLogger({ timeOnly: true, customTimeFormat: 'yyyy-mm-dd' })
-expectAssignable<pretty.PrettyStream>(loggerBoth)
+// Test that both options together is a type error
+expectError(oneLineLogger({ timeOnly: true, customTimeFormat: 'yyyy-mm-dd' }))

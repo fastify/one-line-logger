@@ -33,10 +33,3 @@ test('should generate custom format when customTimeFormat option is provided', (
   const result = formatDate(timestamp, { customTimeFormat: 'yyyy-mm-dd' })
   t.assert.strictEqual(result, '2022-08-11')
 })
-
-test('customTimeFormat should take precedence over timeOnly', (t) => {
-  const timestamp = 1660177682194
-  const result = formatDate(timestamp, { customTimeFormat: 'HH:MM', timeOnly: true })
-  // customTimeFormat should be used, not timeOnly
-  t.assert.match(result, /^\d\d:\d\d$/)
-})

@@ -154,6 +154,8 @@ Common patterns:
 - `"yyyy-mm-dd HH:MM:ss"` → `2022-08-11 01:08:02`
 - `"isoDateTime"` → `2022-08-11T01:08:02+0100`
 
+**Note:** `timeOnly` and `customTimeFormat` are mutually exclusive and cannot be used together.
+
 <a id="license"></a>
 ## License
 
