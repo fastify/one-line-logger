@@ -1,7 +1,5 @@
 import { PinoPretty } from 'pino-pretty'
 
-type OneLineLogger = typeof PinoPretty
-
 declare namespace oneLineLogger {
   export interface Request {
     method: string;
@@ -18,11 +16,28 @@ declare namespace oneLineLogger {
     colors?: CustomColor;
     req?: Request;
   }
-  export const messageFormatFactory: (colorize: boolean, levels: Record<string, number>, colors?: CustomColor) => (log: LogDescriptor, messageKey: string) => string
 
-  export const oneLineLogger: OneLineLogger
+  export interface TimeFormatOptions {
+    timeOnly?: boolean;
+    customTimeFormat?: string;
+  }
+
+  interface BaseOptions extends PinoPretty.PrettyOptions {
+    levels?: Record<string, number>;
+    colors?: CustomColor;
+  }
+
+  export type OneLineLoggerOptions = BaseOptions & (
+    | { timeOnly?: boolean; customTimeFormat?: never }
+    | { timeOnly?: never; customTimeFormat?: string }
+    | { timeOnly?: never; customTimeFormat?: never }
+  )
+
+  export const messageFormatFactory: (levels: Record<string, number> | undefined, colors: CustomColor | undefined, colorize: boolean, options?: TimeFormatOptions) => (log: LogDescriptor, messageKey: string) => string
+
+  export const oneLineLogger: (opts?: OneLineLoggerOptions) => PinoPretty.PrettyStream
   export { oneLineLogger as default }
 }
 
-declare function oneLineLogger (...params: Parameters<OneLineLogger>): ReturnType<OneLineLogger>
+declare function oneLineLogger (opts?: oneLineLogger.OneLineLoggerOptions): PinoPretty.PrettyStream
 export = oneLineLogger

@@ -3,7 +3,7 @@
 const { before, after, test } = require('node:test')
 const pretty = require('pino-pretty')
 const { messageFormatFactory, oneLineLogger } = require('..')
-const { EPOCH, TIME, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
+const { EPOCH, TIME, TIME_ONLY, MESSAGE_KEY, mockTime, unmockTime } = require('./helpers')
 
 const messageFormat = messageFormatFactory(
   undefined,
@@ -270,4 +270,86 @@ test('format log correctly with reqId', async (t) => {
       )
     }
   ))
+})
+
+test('format log correctly with timeOnly option', async (t) => {
+  const messageFormatTimeOnly = messageFormatFactory(
+    undefined,
+    undefined,
+    pretty.isColorSupported,
+    { timeOnly: true }
+  )
+
+  const logDescriptorLogPairs = [
+    [
+      { time: EPOCH, level: 30, [MESSAGE_KEY]: 'basic log' },
+      `${TIME_ONLY} - \x1B[32minfo\x1B[39m - \x1B[36mbasic log\x1B[39m`,
+      `${TIME_ONLY} - info - basic log`
+    ],
+    [
+      {
+        time: EPOCH,
+        level: 30,
+        [MESSAGE_KEY]: 'incoming request log',
+        req: {
+          method: 'GET',
+          url: '/path'
+        }
+      },
+      `${TIME_ONLY} - \x1B[32minfo\x1B[39m - GET /path - \x1B[36mincoming request log\x1B[39m`,
+      `${TIME_ONLY} - info - GET /path - incoming request log`
+    ]
+  ]
+
+  await Promise.all(logDescriptorLogPairs.map(
+    async ([logDescriptor, expectedLogColored, expectedLogUncolored]) => {
+      await t.test(
+        'colors supported in TTY',
+        { skip: !pretty.isColorSupported },
+        (t) => {
+          const log = messageFormatTimeOnly(logDescriptor, MESSAGE_KEY)
+          t.assert.strictEqual(log, expectedLogColored)
+        }
+      )
+
+      await t.test(
+        'colors not supported in TTY',
+        { skip: pretty.isColorSupported },
+        (t) => {
+          const log = messageFormatTimeOnly(logDescriptor, MESSAGE_KEY)
+          t.assert.strictEqual(log, expectedLogUncolored)
+        }
+      )
+    }
+  ))
+})
+
+test('format log correctly with customTimeFormat option', async (t) => {
+  const messageFormatCustom = messageFormatFactory(
+    undefined,
+    undefined,
+    false,
+    { customTimeFormat: 'HH:MM:ss' }
+  )
+
+  const logDescriptor = { time: EPOCH, level: 30, [MESSAGE_KEY]: 'basic log' }
+  const log = messageFormatCustom(logDescriptor, MESSAGE_KEY)
+
+  // Should match pattern HH:MM:ss - info - basic log
+  t.assert.match(log, /^\d\d:\d\d:\d\d - info - basic log$/)
+})
+
+test('oneLineLogger with timeOnly option', () => {
+  oneLineLogger({ timeOnly: true })
+})
+
+test('oneLineLogger with customTimeFormat option', () => {
+  oneLineLogger({ customTimeFormat: 'HH:MM:ss' })
+})
+
+test('oneLineLogger throws when both timeOnly and customTimeFormat are specified', (t) => {
+  t.assert.throws(
+    () => oneLineLogger({ timeOnly: true, customTimeFormat: 'HH:MM:ss' }),
+    { message: 'Cannot use both timeOnly and customTimeFormat options together' }
+  )
 })
