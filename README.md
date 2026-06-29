@@ -110,7 +110,7 @@ const server = fastify({
 });
 
 server.get("/", (request, reply) => {
-  request.log.fatal("An error occured");
+  request.log.fatal("An error occurred");
   request.log.foo("FOO!");
   request.log.bar("BAR!");
   reply.send({ foobar: true });
