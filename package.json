@@ -27,7 +27,7 @@
     "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
     "test:typescript": "tstyche",
-    "test:unit": "node --test --experimental-test-coverage",
+    "test:unit": "node --test --experimental-test-coverage --test-coverage-branches=100 --test-coverage-functions=100 --test-coverage-lines=100",
     "test:watch": "node --test --watch"
   },
   "repository": {
