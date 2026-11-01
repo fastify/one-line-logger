@@ -3,6 +3,10 @@
   "version": "2.2.1",
   "description": "A simple formatter for fastify's logs",
   "main": "index.js",
+  "bin": {
+    "one-line-logger": "./bin.js",
+    "1line": "./bin.js"
+  },
   "type": "commonjs",
   "types": "types/index.d.ts",
   "directories": {

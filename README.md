@@ -44,6 +44,24 @@ const server = fastify({
 });
 ```
 
+## CLI
+
+`@fastify/one-line-logger` can also be used as an executable program (`one-line-logger` or `1line`) by piping newline-delimited JSON logs from `stdin`:
+
+```sh
+node app.js | npx @fastify/one-line-logger
+# or when installed locally / globally:
+node app.js | one-line-logger
+node app.js | 1line --colorize --time-only
+```
+
+Supported CLI options:
+- `-c, --colorize` (or `--no-colorize`): Force or disable colorized output
+- `-t, --time-only`: Output only the time without date and timezone
+- `-f, --custom-time-format <fmt>`: Use a custom `dateformat` pattern for timestamps
+- `-v, --version`: Output the version number
+- `-h, --help`: Display help
+
 ## Colors
 
 Colors are enabled by default when supported. To manually disable the colors you need to set the `transport.colorize` option to `false`. For more options check the `colorette` [docs](https://github.com/jorgebucaran/colorette?tab=readme-ov-file#environment).
